@@ -32,9 +32,8 @@ export default function ContactForm() {
           message: formData.message,
         }),
       });
-      console.log(response.body)
-
       const data = await response.json();
+      console.log("Resposta:", data);
 
       if (!response.ok) {
         console.error("Erro:", data);
