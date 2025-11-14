@@ -14,7 +14,7 @@ export default function ContactForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Aqui você integra com EmailJS ou seu backend
-    console.log("Enviando dados v2:", formData);
+    console.log("Enviando dados v3:", formData);
     console.log("SMTP_HOST:", process.env.SMTP_HOST);
     console.log("SMTP_PORT:", process.env.SMTP_PORT);
     console.log("SMTP_USER:", process.env.SMTP_USER);
@@ -32,6 +32,7 @@ export default function ContactForm() {
           message: formData.message,
         }),
       });
+      console.log(response.data)
 
       const data = await response.json();
 
