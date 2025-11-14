@@ -26,9 +26,9 @@ export const sendEmail = async (req, res) => {
       html: `<p>${message}</p>`,
     });
 
-    return res.json({ success: true, message: "E-mail enviado com sucesso!" },to,subject,message);
+    return res.json({ success: true,to,subject,message });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: "Erro ao enviar e-mail." },to,subject,message);
+    return res.status(500).json({ error: "Erro ao enviar e-mail.",to,subject,message });
   }
 };
