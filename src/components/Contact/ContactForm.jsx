@@ -1,12 +1,43 @@
 import React, { useState } from "react";
+import notifySuccess from "../Notify/notifySuccess";
+import notifyError from "../Notify/notifyError";
 
 export default function ContactForm() {
-  console.log("versão 1.03")
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   });
+
+  const validateForm = () => {
+    if (!formData.name.trim()) {
+      notifyError("Por favor, informe seu nome.");
+      return false;
+    }
+
+    if (formData.name.trim().length < 3) {
+      notifyError("O nome deve ter pelo menos 3 caracteres.");
+      return false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      notifyError("Informe um email válido.");
+      return false;
+    }
+
+    if (!formData.message.trim()) {
+      notifyError("A mensagem não pode estar vazia.");
+      return false;
+    }
+
+    if (formData.message.length < 10) {
+      notifyError("A mensagem deve conter pelo menos 10 caracteres.");
+      return false;
+    }
+
+    return true; // tudo certo ✔
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -14,8 +45,9 @@ export default function ContactForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aqui você integra com EmailJS ou seu backend
-    console.log("Enviando dados:", formData);
+    
+    // 🔐 bloqueia envio se a validação falhar
+    if (!validateForm()) return;
 
       try {
       const response = await fetch("/api/sendMail", {
@@ -28,21 +60,19 @@ export default function ContactForm() {
           email: formData.email,
           message: formData.message,
         }),
-      });
+      }); 
       const data = await response.json();
-      console.log("Resposta:", data);
 
       if (!response.ok) {
-        console.error("Erro:", data);
-        alert("Ocorreu um erro ao enviar a mensagem.");
+        notifyError("Ocorreu um erro ao enviar a mensagem.");
         return;
       }
 
-      alert("Mensagem enviada com sucesso!");
+      notifySuccess("Mensagem enviada com sucesso!");
       setFormData({ name: "", email: "", message: "" });
     } catch (error) {
-      console.error("Erro ao conectar:", error);
-      alert("Não foi possível enviar a mensagem. Tente novamente.");
+      notifySuccess("Mensagem enviada com sucesso!");
+      notifyError("Não foi possível enviar a mensagem.");
     }
 
   };
