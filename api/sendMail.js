@@ -5,7 +5,7 @@ export default async function handler (req, res) {
   console.log(to, subject, message)
 
   if (!to || !subject || !message) {
-    return res.status(400).json({ error: "Campos obrigatórios ausentes." });
+    return res.status(400).json({ error: "Campos obrigatórios ausentes." , to, subject, message});
   }
 
   try {
