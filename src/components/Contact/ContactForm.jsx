@@ -11,10 +11,39 @@ export default function ContactForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Aqui você integra com EmailJS ou seu backend
-    console.log("Enviando dados:", formData);
+    console.log("Enviando dados v2:", formData);
+
+      try {
+      const response = await fetch("/api/sendMail", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        console.error("Erro:", data);
+        alert("Ocorreu um erro ao enviar a mensagem.");
+        return;
+      }
+
+      alert("Mensagem enviada com sucesso!");
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      console.error("Erro ao conectar:", error);
+      alert("Não foi possível enviar a mensagem. Tente novamente.");
+    }
+
     alert("Mensagem enviada com sucesso!");
     setFormData({ name: "", email: "", message: "" });
   };
