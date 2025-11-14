@@ -32,7 +32,7 @@ export default function ContactForm() {
           message: formData.message,
         }),
       });
-      console.log(response)
+      console.log(response.body)
 
       const data = await response.json();
 
