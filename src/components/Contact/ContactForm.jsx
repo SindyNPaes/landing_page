@@ -15,6 +15,10 @@ export default function ContactForm() {
     e.preventDefault();
     // Aqui você integra com EmailJS ou seu backend
     console.log("Enviando dados v2:", formData);
+    console.log("SMTP_HOST:", process.env.SMTP_HOST);
+    console.log("SMTP_PORT:", process.env.SMTP_PORT);
+    console.log("SMTP_USER:", process.env.SMTP_USER);
+    console.log("SMTP_PASS:", process.env.SMTP_PASS);
 
       try {
       const response = await fetch("/api/sendMail", {
@@ -44,8 +48,6 @@ export default function ContactForm() {
       alert("Não foi possível enviar a mensagem. Tente novamente.");
     }
 
-    alert("Mensagem enviada com sucesso!");
-    setFormData({ name: "", email: "", message: "" });
   };
 
   return (
