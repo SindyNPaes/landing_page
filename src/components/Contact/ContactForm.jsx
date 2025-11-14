@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 export default function ContactForm() {
-  console.log("versão 1.02")
+  console.log("versão 1.03")
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -15,7 +15,7 @@ export default function ContactForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Aqui você integra com EmailJS ou seu backend
-    console.log("Enviando dados v3.1:", formData);
+    console.log("Enviando dados:", formData);
 
       try {
       const response = await fetch("/api/sendMail", {
@@ -24,8 +24,8 @@ export default function ContactForm() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          subject: formData.name,
-          to: formData.email,
+          name: formData.name,
+          email: formData.email,
           message: formData.message,
         }),
       });
