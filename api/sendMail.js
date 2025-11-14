@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 
-export const sendEmail = async (req, res) => {
+export default async function handler (req, res) {
   const { to, subject, message } = req.body;
   console.log(to, subject, message)
 
