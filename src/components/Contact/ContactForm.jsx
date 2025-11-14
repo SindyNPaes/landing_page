@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 export default function ContactForm() {
-  console.log("versão 1.01")
+  console.log("versão 1.02")
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -24,8 +24,8 @@ export default function ContactForm() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
+          subject: formData.name,
+          to: formData.email,
           message: formData.message,
         }),
       });
